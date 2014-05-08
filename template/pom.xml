@@ -1,0 +1,68 @@
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    >
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- The Basics -->
+    <groupId><: $groupId :></groupId>
+    <artifactId><: $artifactId :></artifactId>
+    <version><: $version :></version>
+    <packaging><: $packaging :></packaging>
+    <dependencies>
+        : for $dependencies -> $dependency {
+        <dependency>
+            <groupId>
+                <: $dependency.groupId :>
+            </groupId>
+            <artifactId>
+                <: $dependency.artifactId :>
+            </artifactId>
+            <version>
+                <: $dependency.version :>
+            </version>
+            <type>
+                <: $dependency.type :>
+            </type>
+            <scope>
+                <: $dependency.scope :>
+            </scope>
+            <optional>
+                <: $dependency.optional ? 'true' : 'false' :>
+            </optional>
+        </dependency>
+        : }
+    </dependencies>
+    <parent><: $parent :></parent>
+    <dependencyManagement><: $dependencyManagement :></dependencyManagement>
+    <modules><: $modules :></modules>
+    <properties><: $properties :></properties>
+
+    <!-- Build Settings -->
+    <build><: $build :></build>
+    <reporting><: $reporting :></reporting>
+
+    <!-- More Project Information -->
+    <name><: $name :></name>
+    <description><: $description :></description>
+    <url><: $url :></url>
+    <inceptionYear><: $inceptionYear :></inceptionYear>
+    <licenses><: $licenses :></licenses>
+    <organization><: $organization :></organization>
+    <developers><: $developers :></developers>
+    <contributors><: $contributors :></contributors>
+
+    <!-- Environment Settings -->
+    <issueManagement><: $issueManagement :></issueManagement>
+    <ciManagement><: $ciManagement :></ciManagement>
+    <mailingLists><: $mailingLists :></mailingLists>
+    <scm><: $scm :></scm>
+    <prerequisites><: $prerequisites :></prerequisites>
+    <repositories><: $repositories :></repositories>
+    <pluginRepositories>
+        <: $pluginRepositories :>
+    </pluginRepositories>
+    <distributionManagement><: $distributionManagement :></distributionManagement>
+    <profiles><: $profiles :></profiles>
+</project>
