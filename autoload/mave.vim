@@ -26,25 +26,35 @@ let s:V= vital#of('mave')
 let mave#Web_HTTP=     s:V.import('Web.HTTP')
 let mave#Web_JSON=     s:V.import('Web.JSON')
 let mave#OptionParser= s:V.import('OptionParser')
+let mave#Vim_Message=  s:V.import('Vim.Message')
 unlet s:V
 
 function! mave#create_project(config)
-    let l:archetype= get(a:config, 'archetype', {})
+    if !has_key(a:config, 'group_id')
+        throw "mave: Missing required key `group_id'."
+    endif
+    if !has_key(a:config, 'artifact_id')
+        throw "mave: Missing required key `artifact_id'."
+    endif
+    if !has_key(a:config, 'version')
+        throw "mave: Missing required key `version'."
+    endif
 
-    let l:cmd= join([
+    let archetype= get(a:config, 'archetype', {})
+
+    let cmd= join([
     \       g:mave_config.mvn_command,
     \       '--batch-mode',
     \       'archetype:generate',
-    \       '-DarchetypeGroupId=' . get(l:archetype, 'group_id', 'org.apache.maven.archetypes'),
-    \       '-DarchetypeArtifactId=' . get(l:archetype, 'artifact_id', 'maven-archetype-quickstart'),
+    \       '-DarchetypeGroupId=' . get(archetype, 'group_id', 'org.apache.maven.archetypes'),
+    \       '-DarchetypeArtifactId=' . get(archetype, 'artifact_id', 'maven-archetype-quickstart'),
     \       '-DgroupId=' . a:config.group_id,
     \       '-DartifactId=' . a:config.artifact_id,
     \       '-Dversion=' . a:config.version,
     \   ],
     \   ' '
     \)
-
-    call mave#util#sync_exec(l:cmd)
+    call mave#util#sync_exec(cmd)
 endfunction
 
 let &cpo= s:save_cpo
